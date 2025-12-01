@@ -12,10 +12,10 @@ typedef struct no {
 int nos = 0;
 
 // --- Protótipos das Funções (Índice do código) ---
-no* criarNo(int valor);
-no* inserir(no* raiz, int valor);
-no* remover(no* raiz, int valor);
-void buscar(no* raiz, int valor);
+no* criarNo(int dado);
+no* inserir(no* raiz, int dado);
+no* remover(no* raiz, int dado);
+void buscar(no* raiz, int dado);
 void preOrdem(no* raiz);
 void emOrdem(no* raiz);
 void posOrdem(no* raiz);
@@ -71,37 +71,37 @@ int main() {
 }
 
 // --- Função Auxiliar: Criação de Nó ---
-no* criarNo(int valor) {
+no* criarNo(int dado) {
     // malloc: Pede espaço na memória RAM para um novo nó
     no *novo = (no*)malloc(sizeof(no));
     if (novo == NULL) {
         printf("Erro: Memoria insuficiente!\n");
         exit(1);
     }
-    novo->dado = valor;
+    novo->dado = dado;
     novo->esq = NULL; // Inicializa ponteiros como NULL para evitar lixo de memória
     novo->dir = NULL;
     return novo;
 }
 
 // --- Inserção Iterativa (Sem recursão) ---
-no* inserir(no* raiz, int valor) {
+no* inserir(no* raiz, int dado) {
     
     // Caso especial: Árvore vazia, o novo nó vira a raiz
     if (raiz == NULL) {
         nos++;
-        return criarNo(valor);
+        return criarNo(dado);
     }
 
     no *atual = raiz;
 
     // Loop infinito para navegar até achar uma vaga (folha)
     while (1) {
-        if (valor < atual->dado) {
+        if (dado < atual->dado) {
             // Vai para a Esquerda
             if (atual->esq == NULL) {
                 // Achou uma vaga na esquerda! Insere aqui.
-                atual->esq = criarNo(valor);
+                atual->esq = criarNo(dado);
                 nos++;
                 printf("Inserido na esquerda de %d\n", atual->dado);
                 break; // Sai do loop
@@ -109,11 +109,11 @@ no* inserir(no* raiz, int valor) {
                 atual = atual->esq; // Continua descendo para a esquerda
             }
         } 
-        else if (valor > atual->dado) {
+        else if (dado > atual->dado) {
             // Vai para a Direita
             if (atual->dir == NULL) {
                 // Achou uma vaga na direita! Insere aqui.
-                atual->dir = criarNo(valor);
+                atual->dir = criarNo(dado);
                 nos++;
                 printf("Inserido na direita de %d\n", atual->dado);
                 break; // Sai do loop
@@ -122,7 +122,7 @@ no* inserir(no* raiz, int valor) {
             }
         } 
         else {
-            printf("Valor %d ja existe (duplicado). Ignorado.\n", valor);
+            printf("Valor %d ja existe (duplicado). Ignorado.\n", dado);
             break;
         }
     }
@@ -130,7 +130,7 @@ no* inserir(no* raiz, int valor) {
 }
 
 // --- Remoção Recursiva (A lógica mais complexa) ---
-no* remover(no* raiz, int valor) {
+no* remover(no* raiz, int dado) {
     // Caso base: Árvore vazia ou valor não encontrado
     if (raiz == NULL) {
         printf("Valor nao encontrado ou arvore vazia.\n");
@@ -138,13 +138,13 @@ no* remover(no* raiz, int valor) {
     }
 
     // --- Navegação ---
-    if (valor < raiz->dado) {
+    if (dado < raiz->dado) {
         // O valor está na esquerda, chama a função para a subárvore esquerda
-        raiz->esq = remover(raiz->esq, valor);
+        raiz->esq = remover(raiz->esq, dado);
     }
-    else if (valor > raiz->dado) {
+    else if (dado > raiz->dado) {
         // O valor está na direita, chama a função para a subárvore direita
-        raiz->dir = remover(raiz->dir, valor);
+        raiz->dir = remover(raiz->dir, dado);
     }
     else {
         // --- Valor Encontrado! (raiz->dado == valor) ---
@@ -184,21 +184,21 @@ no* remover(no* raiz, int valor) {
 }
 
 // --- Busca Iterativa ---
-void buscar(no* raiz, int valor) {
+void buscar(no* raiz, int dado) {
     no* atual = raiz;
     // Enquanto não chegar no fim (NULL)
     while (atual != NULL) {
-        if (valor == atual->dado) {
-            printf("Valor %d ENCONTRADO na arvore!\n", valor);
+        if (dado == atual->dado) {
+            printf("Valor %d ENCONTRADO na arvore!\n", dado);
             return;
         }
         // Decide se vai para esquerda ou direita
-        if (valor < atual->dado)
+        if (dado < atual->dado)
             atual = atual->esq;
         else
             atual = atual->dir;
     }
-    printf("Valor %d NAO encontrado.\n", valor);
+    printf("Valor %d NAO encontrado.\n", dado);
 }
 
 // --- Submenu para os Percursos ---

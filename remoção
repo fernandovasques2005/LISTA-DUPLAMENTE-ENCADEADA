@@ -1,0 +1,30 @@
+No* remover(No* raiz, int vaor){
+    if (raiz ==NULL)
+    return NULL;
+    
+    if (valor < raiz->valor){
+        raiz->esq = remover(raiz->esq,valor);
+    }
+    else if (valor > raiz-valor){
+        raiz->dir = remover(raiz->dir = remover(raiz->dir,valor));
+    }
+    else{
+        if(raiz->esq == NULL && raiz->di == NULL){
+            free(raiz);
+            return NULL;
+        }
+        if(raiz->esq == NULL || raiz->dir == NULL){
+            No* temp = (raiz-> esq != NULL)? raiz->esq : raiz->dir;
+            free(raiz);
+            return temp;
+        }
+        No* temp = raiz->dir;
+        while (temp->esq !=NULL){
+            temp = temp->esq;
+        }
+        raiz->valor = temp->valor;
+        raiz->dir = remover(raiz->dir,temp->valor);
+        
+    }
+    return raiz ;
+}

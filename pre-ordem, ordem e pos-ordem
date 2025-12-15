@@ -1,0 +1,35 @@
+void preOrdem(No *no){
+   if (no) {
+    printf("%d (%s)", no->valor, no->cor == VERMELHO ? "V" : "P");
+      preOrdem(no->esq);
+      preOrdem(no->dir);
+   } 
+}
+
+void emOrdem(No *no) {
+    if (no) {
+        emOrdem(no->esq);
+        printf("%d (%s) ", no->valor, no->cor == VERMELHO ? "V" : "P");
+        emOrdem(no->dir); 
+    }
+}
+
+void posOrdem(No *no) {
+    if (no) {
+        posOrdem(no->esq);
+        posOrdem(no->dir);
+        printf("%d (%s) ", no->valor, no->cor == VERMELHO ? "V" : "p");
+    }
+}
+
+int main(){
+
+    printf("\nPré-ordem:\n");
+    preOrdem(raiz);
+
+    printf("\n\nEm ordem:\n");
+    emOrdem(raiz);
+
+    printf("\n\nPós-ordem:\n");
+    posOrdem(raiz);
+}

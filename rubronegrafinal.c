@@ -16,6 +16,7 @@ typedef struct No {
 
 No *TNULL;
 
+int main();
 void inicializarTNULL();
 No* criarNo(int dado);
 void rotacaoEsquerda(No **raiz, No *x);
@@ -392,4 +393,5 @@ void liberarArvore(No *no) {
         liberarArvore(no->direita);
         free(no);
     }
+
 }

@@ -1,0 +1,56 @@
+void emOrdem(no* primeiro){
+    if (primeiro == NULL)
+        return;
+    emOrdem(primeiro->menor);
+    printf("%d", primeiro->dado1);
+    emOrdem(primeiro->meio);
+
+    if (primeiro->folha == 2){
+        printf("%d", primeiro->dado2);
+        emOrdem(primeiro->maior);
+    }
+}
+
+typedef struct Fila{
+    no*no;
+    struct Fila* prox;
+} Fila;
+
+void enfileira(Fila** inicio, Fila**fim, no*no){
+    Fila* novo = (Fila*)
+    malloc(sizeof(Fila));
+    novo->no = no;
+    novo->prox = NULL;
+
+    if (*fim)
+        (*fim)->prox =novo;
+    else
+        *inicio = novo;
+
+    *fim = novo;
+}
+
+void porNIvel(no*primeiro){
+    if(primeiro== NULL)
+    return;
+
+    Fila *inicio = NULL, *fim = NULL;
+    emfileira(&inicio, &fim, primeiro);
+
+    while (inicio){
+        no* atual = desenfileira(&inicio,&fim);
+
+        printf("[");
+        printf("%d", atual->dado1);
+        if (atual->folha ==2)
+          printf(" | %d", atual->dado2);
+        printf("]");
+        
+        if (atual->menor)
+            enfileira(&inicio, &fim, atual->menor);
+        if (atual->meio)
+            enfileira(&inicio, &fim, atual->meio);
+        if (atual->maior)
+            enfileira(&inicio, &fim, atual->maior);               
+    }
+}
